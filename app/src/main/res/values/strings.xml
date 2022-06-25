@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Drive Stream</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="trying_to_sign_in">Trying to sign-in…</string>
+    <string name="my_drive">My drive</string>
+    <string name="shared_drives">Shared drives</string>
+    <string name="shared_with_me">Shared with me</string>
+    <string name="starred">Starred</string>
+    <string name="trashed">Trashed</string>
+    <string name="chapters">Chapters</string>
+    <string name="subtitles">Subtitles</string>
+    <string name="audio">Audio</string>
+    <string name="playback_speed">Playback speed</string>
+    <string name="resize">Resize</string>
+    <string name="pip_mode">PiP Mode</string>
+    <string name="rotate">Rotate</string>
+    <string name="unknown">Unknown</string>
+    <string name="select_subtitle">Select subtitle track</string>
+    <string name="select_audio">Select audio track</string>
+    <string name="select_speed">Select playback speed</string>
+    <string name="portrait">Portrait</string>
+    <string name="landscape">Landscape</string>
+    <string name="ok">OK</string>
+    <string name="details">Details</string>
+    <string name="retry">Retry</string>
+</resources>

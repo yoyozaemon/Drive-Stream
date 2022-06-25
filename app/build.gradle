@@ -1,0 +1,141 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id "androidx.navigation.safeargs.kotlin"
+}
+
+Properties properties = new Properties()
+
+android {
+
+    packagingOptions {
+        exclude "META-INF/DEPENDENCIES"
+    }
+
+    properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+    signingConfigs {
+        debug {
+            storeFile file(properties.getProperty("KEY_STORE", ""))
+            storePassword properties.getProperty("STORE_PASSWORD", "")
+            keyAlias properties.getProperty("KEY_ALIAS", "")
+            keyPassword properties.getProperty("KEY_PASSWORD", "")
+        }
+        release {
+            storeFile file(properties.getProperty("KEY_STORE", ""))
+            storePassword properties.getProperty("STORE_PASSWORD", "")
+            keyAlias properties.getProperty("KEY_ALIAS", "")
+            keyPassword properties.getProperty("KEY_PASSWORD", "")
+        }
+    }
+
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "zechs.drive.stream"
+        minSdk 28
+        targetSdk 32
+        versionCode 3
+        versionName "1.0.2"
+        archivesBaseName = "${applicationId}-${versionCode}"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'
+            ), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+            universalApk true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["extension-*.aar"])
+
+    // Exoplayer
+    def exoplayer_version = "2.18.0"
+    implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-dash:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-ui:$exoplayer_version"
+
+    // Datastore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:4.13.2"
+    kapt "com.github.bumptech.glide:compiler:4.12.0"
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.12.0"
+
+    // Coroutine Lifecycle Scopes
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
+
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2"
+
+    // Fix for dependency resolution
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+
+    // Google Play
+    implementation "com.google.android.gms:play-services-auth:20.2.0"
+    implementation "com.google.http-client:google-http-client-gson:1.26.0"
+    implementation("com.google.api-client:google-api-client-android:1.26.0") {
+        exclude group: "org.apache.httpcomponents"
+    }
+    implementation("com.google.apis:google-api-services-drive:v3-rev136-1.25.0") {
+        exclude group: "org.apache.httpcomponents"
+    }
+
+    // Dagger hilt
+    implementation "com.google.dagger:hilt-android:2.40.1"
+    kapt "com.google.dagger:hilt-compiler:2.40.1"
+
+    // Splash
+    implementation "androidx.core:core-splashscreen:1.0.0-rc01"
+
+    // Navigational Components
+    implementation "androidx.navigation:navigation-fragment-ktx:2.4.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.4.2"
+
+    //Kotlin
+    implementation "androidx.core:core-ktx:1.8.0"
+
+    implementation "androidx.appcompat:appcompat:1.4.2"
+    implementation "com.google.android.material:material:1.6.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+
+    testImplementation "junit:junit:4.13.2"
+    androidTestImplementation "androidx.test.ext:junit:1.1.3"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
+}
